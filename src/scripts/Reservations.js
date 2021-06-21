@@ -1,22 +1,30 @@
 import { getReservations } from "./dataAccess.js"
 import { deleteReservation } from "./dataAccess.js"
+import { getClowns } from "./dataAccess.js"
+
 
 export const Reservations = () => {
     const reservations = getReservations()
+    const clowns = getClowns()
+
+    const sortedReservations = reservations.sort((a,b) => {
+        return parseInt(a.reserveDate.split("-").join("")) - parseInt(b.reserveDate.split("-").join(""))
+      })
 
     let html = '<ul>'
 
-    const listItems = reservations.map(reservation => {
+    const listItems = sortedReservations.map(reservation => {
         return `
         <li>
-            ${reservation.id}
+            ${reservation.reserveDate}
             <button class="reservation__delete"
                     id="reservation--${reservation.id}">
                 Delete
             </button>
             <select name="clowns" id="clowns">
-            <option value="clownId">placeholder</option>
-            <option value="clownId2">placeholder</option>
+            <option value="">Clown</option>
+            <option value="clown">${clowns.map(clown=> {
+                return `<option value="${clown.id}--${clown.name}">${clown.name}</option>`})}</option>
             </select>
         </li>
     `

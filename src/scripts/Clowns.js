@@ -23,11 +23,11 @@ export const Clowns = () => {
   return html
 }
 
-const mainContainer = document.querySelector("#container")
+const mainContainer = document.querySelector("#container") */
 
-mainContainer.addEventListener("click", click => {
+/* mainContainer.addEventListener("click", click => {
     if (click.target.id.startsWith("clown--")) {
         const [,clownId] = click.target.id.split("--")
         deleteclown(parseInt(clownId))
     }
-}) */
+})  */

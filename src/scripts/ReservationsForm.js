@@ -52,7 +52,8 @@ mainContainer.addEventListener("click", clickEvent => {
             ChildrenAttending: cAttending,
             partyAddress: pAddress,
             reserveDate: rdate,
-            duration: rduration
+            duration: rduration,
+            fullfilled: false
 
         }
 
