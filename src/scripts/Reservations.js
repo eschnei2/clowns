@@ -1,7 +1,8 @@
 import { getReservations } from "./dataAccess.js"
 import { deleteReservation } from "./dataAccess.js"
 import { getClowns } from "./dataAccess.js"
-
+import { sendCompletions } from "./dataAccess.js"
+import { getCompletions } from "./dataAccess.js"
 
 export const Reservations = () => {
     const reservations = getReservations()
@@ -21,10 +22,10 @@ export const Reservations = () => {
                     id="reservation--${reservation.id}">
                 Delete
             </button>
-            <select name="clowns" id="clowns">
+            <select name="clowns" id="clowns--">
             <option value="">Clown</option>
-            <option value="clown">${clowns.map(clown=> {
-                return `<option value="${clown.id}--${clown.name}">${clown.name}</option>`})}</option>
+            ${clowns.map(clown=> {
+                return `<option value="${reservation.id}--${reservation.parentName}--${reservation.childName}--${reservation.ChildrenAttending}--${reservation.partyAddress}--${reservation.reserveDate}--${reservation.duration}--${clown.name}">${clown.name}</option>`})}
             </select>
         </li>
     `
@@ -36,6 +37,26 @@ export const Reservations = () => {
   return html
 }
 
+
+export const Completions = () => {
+    const completions = getCompletions()
+
+    let html = '<ul>'
+
+    const listItems = completions.map(completion => {
+        return`
+        <li>
+          ${completion}
+        </li>
+    `
+    
+    })
+
+    html += listItems.join("")
+    html += '</ul>'
+
+}
+
 const mainContainer = document.querySelector("#container")
 
 mainContainer.addEventListener("click", click => {
@@ -44,3 +65,32 @@ mainContainer.addEventListener("click", click => {
         deleteReservation(parseInt(reservationId))
     }
 })
+
+mainContainer.addEventListener(
+    "change",
+    (event) => {
+        if (event.target.id === "clowns--") {
+            const [,pName, cName, cAttending, pAddress, rDate, Dhours, clown] = event.target.value.split("--")
+
+            const completions = {
+                parentName: pName,
+                childName: cName,
+                ChildrenAttending: cAttending,
+                partyAddress: pAddress,
+                reserveDate: rDate,
+                duration: Dhours,
+                clown: clown,
+                fullfilled: true
+            }
+
+            sendCompletions(completions)
+
+        }
+        if (event.target.id === "clowns--") {
+
+            const[reservationId] = event.target.value.split("--")
+
+            deleteReservation(parseInt(reservationId))
+        }
+    }
+)

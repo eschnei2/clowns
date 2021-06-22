@@ -1,5 +1,6 @@
 import { ReservationsForm } from "./ReservationsForm.js"
 import { Reservations } from "./Reservations.js" 
+import { Completions } from "./Reservations.js"
 
 export const ClownsRUSsplash = () => {
     return `
@@ -11,6 +12,11 @@ export const ClownsRUSsplash = () => {
         <section class="serviceRequests">
             <h2>Service Requests</h2>
             ${Reservations()}
+        </section>
+
+        <section class="serviceCompletions">
+            <h2>Completed Requests</h2>
+            ${Completions()}
         </section>
     `
 }

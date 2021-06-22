@@ -50,6 +50,10 @@ export const getClowns = () => {
     return [...applicationState.clowns]
 }
 
+export const getCompletions = () => {
+    return [...applicationState.completions]
+}
+
 export const sendReservation = (userServiceRequest) => {
     const fetchOptions = {
         method: "POST",
